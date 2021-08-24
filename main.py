@@ -21,14 +21,17 @@ def handle_game_event(field: Field, time) -> None:
                 field.figure.move_right((field.start_x, field.end_x))
     
     if time % 6 == 0:
-        moving_down = field.figure.move_down()
+        moving_down = field.figure.move_down((field.start_x, field.end_x))
         if not moving_down:
             for cube in field.figure.cubes:
-                field.fallen_cubes.append(cube)
+                x = (cube.x - field.start_x) // CUBE_SIZE
+                y = (cube.y - field.start_y) // CUBE_SIZE
+                color = cube.color
+                field.fallen_cubes[y][x] = (1, color)
+                field.clear_full_row()
             field.figure = field.create_figure()
         time = 0
     time += 1
-    print(time)
     return time
 
 

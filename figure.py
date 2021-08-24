@@ -15,8 +15,8 @@ class Figure:
         for cube in self.cubes:
             cube.draw(self.screen)
 
-    def move_down(self) -> bool:
-        if not self._is_collision_down():
+    def move_down(self, board_x: tuple) -> bool:
+        if not self._is_collision_down(board_x):
             for cube in self.cubes:
                 x = cube.x
                 y = cube.y + CUBE_SIZE
@@ -39,11 +39,11 @@ class Figure:
                 cube.move(x, y)
 
 
-    def _is_collision_down(self) -> bool:
+    def _is_collision_down(self, board_x: tuple) -> bool:
         for cube in self.cubes:
             x = cube.x
             y = cube.y + CUBE_SIZE
-            if cube.is_collision(x, y, self.fallen_cubes):
+            if cube.is_collision(x, y, self.fallen_cubes, board_x):
                 return True
         return False
 

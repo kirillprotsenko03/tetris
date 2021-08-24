@@ -6,6 +6,7 @@ import random
 import pygame
 from settings import *
 from figure import *
+from cube import Cube
 
 
 
@@ -19,7 +20,8 @@ class Field:
         self.start_x, self.end_x = self._get_x_board()
         self.start_y, self.end_y = self._get_y_board()
 
-        self.fallen_cubes = []
+        self.fallen_cubes = [[(0, BLACK) for x in range(11)]
+                             for y in range(21)]
         self.figure = self.create_figure()
 
     
@@ -27,6 +29,20 @@ class Field:
         figures = (FirstFigure, SecondFigure)
         figure = random.choice(figures)
         return figure(self.screen, self.fallen_cubes)
+
+    def clear_full_row(self) -> None:
+        for y in range(21):
+            x_count = 0
+            for x in range(11):
+                x_count += self.fallen_cubes[y][x][0]
+            if x_count == 10:
+                self._destroy_row(y)
+
+    def _destroy_row(self, y: int) -> None:
+        need_to_del = self.fallen_cubes[y]
+        self.fallen_cubes.remove(need_to_del)
+        new_row = [(0, BLACK) for x in range(11)]
+        self.fallen_cubes = [new_row] + self.fallen_cubes
 
     def _get_x_board(self) -> tuple:
         center_x = self.screen_size[0] // 2
@@ -53,5 +69,16 @@ class Field:
                             (self.end_x, y))
         
         self.figure.draw()
-        for cube in self.fallen_cubes:
-            cube.draw(self.screen)
+        for y in range(21):
+            for x in range(11):
+                if self.fallen_cubes[y][x][0]:
+                        cube_x = self.start_x + x * CUBE_SIZE
+                        cube_y = self.start_y + y * CUBE_SIZE
+                        color = self.fallen_cubes[y][x][1]
+                        Cube.draw_here(self.screen, 
+                                        cube_x, cube_y, color)
+                        
+
+
+
+

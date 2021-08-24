@@ -7,5 +7,5 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 TITLE = "TETRIS"  # name of game
-FPS = 10  # frame per second in game
+FPS = 50  # frame per second in game
 CUBE_SIZE = HEIGHT_SC // 20
