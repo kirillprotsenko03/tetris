@@ -28,7 +28,7 @@ def handle_game_event(field: Field, time) -> None:
                 y = (cube.y - field.start_y) // CUBE_SIZE
                 color = cube.color
                 field.fallen_cubes[y][x] = (1, color)
-                field.clear_full_row()
+            field.clear_full_row()
             field.figure = field.create_figure()
         time = 0
     time += 1
