@@ -26,7 +26,7 @@ class Field:
 
     
     def create_figure(self) -> Figure:
-        figures = (FirstFigure, SecondFigure)
+        figures = (FirstFigure, SecondFigure, TherdFigure, FourhtFigure)
         figure = random.choice(figures)
         return figure(self.screen, self.fallen_cubes)
 

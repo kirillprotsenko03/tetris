@@ -10,6 +10,7 @@ class Figure:
         self.color = self._choose_color()
         self.fallen_cubes = fallen_cubes
         self.cubes = []
+        self.center_x = WIDTH_SC // 2
 
     def draw(self) -> None:
         for cube in self.cubes:
@@ -72,14 +73,53 @@ class Figure:
 
 class FirstFigure(Figure):
     def __init__(self, screen, fallen_cubes) -> None:
+        """this figure looks like this:
+                    ###
+                    ###
+                    ###
+        """
         super().__init__(screen, fallen_cubes)
         center_x = WIDTH_SC // 2
-        self.cubes = [Cube(center_x, -CUBE_SIZE, self.color)]
+        self.cubes = [Cube(self.center_x + CUBE_SIZE * x, CUBE_SIZE * y, self.color)
+                     for x in range(-1, 2)
+                     for y in range(-3, 0)]
         
 
 class SecondFigure(Figure):
+    """this figure looks like this:
+
+             #
+             # 
+             # 
+             # 
+             #  
+    """
     def __init__(self, screen, fallen_cubes) -> None:
         super().__init__(screen, fallen_cubes)
-        center_x = WIDTH_SC // 2
-        self.cubes = [Cube(center_x, -CUBE_SIZE, self.color),
-                      Cube(center_x + CUBE_SIZE, -CUBE_SIZE, self.color)]
+        self.cubes = [Cube(self.center_x, -i * CUBE_SIZE, self.color)
+                     for i in range(1, 6)]
+
+class TherdFigure(Figure):
+    """ this figure looks like this:
+           ##
+            # 
+            # 
+            # """
+    def __init__(self, screen, fallen_cubes) -> None:
+        super().__init__(screen, fallen_cubes)
+        self.cubes = [Cube(self.center_x, -i * CUBE_SIZE, self.color)
+                     for i in range(1, 5)]
+        self.cubes.append(Cube(self.center_x - CUBE_SIZE, -CUBE_SIZE * 4, self.color))
+    
+
+class FourhtFigure(Figure):
+    """this figure looks like this:
+                #
+               ## 
+                # 
+    """
+    def __init__(self, screen, fallen_cubes) -> None:
+        super().__init__(screen, fallen_cubes)
+        self.cubes = [Cube(self.center_x, -i * CUBE_SIZE, self.color)
+                     for i in range(1, 4)]
+        self.cubes.append(Cube(self.center_x - CUBE_SIZE, -2 * CUBE_SIZE, self.color))
